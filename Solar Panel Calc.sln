@@ -1,31 +1,221 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.5.33516.290
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Solar Panel Calc", "Solar Panel Calc\Solar Panel Calc.vcxproj", "{D69CC96E-5870-4432-9B54-5EEE85B5A8B0}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
-		Release|x64 = Release|x64
-		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D69CC96E-5870-4432-9B54-5EEE85B5A8B0}.Debug|x64.ActiveCfg = Debug|x64
-		{D69CC96E-5870-4432-9B54-5EEE85B5A8B0}.Debug|x64.Build.0 = Debug|x64
-		{D69CC96E-5870-4432-9B54-5EEE85B5A8B0}.Debug|x86.ActiveCfg = Debug|Win32
-		{D69CC96E-5870-4432-9B54-5EEE85B5A8B0}.Debug|x86.Build.0 = Debug|Win32
-		{D69CC96E-5870-4432-9B54-5EEE85B5A8B0}.Release|x64.ActiveCfg = Release|x64
-		{D69CC96E-5870-4432-9B54-5EEE85B5A8B0}.Release|x64.Build.0 = Release|x64
-		{D69CC96E-5870-4432-9B54-5EEE85B5A8B0}.Release|x86.ActiveCfg = Release|Win32
-		{D69CC96E-5870-4432-9B54-5EEE85B5A8B0}.Release|x86.Build.0 = Release|Win32
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {E68C9B6C-8741-4CB1-A738-9BEEA4D99C9C}
-	EndGlobalSection
-EndGlobal
+#include <iostream>
+#include <string>
+#include <ctime>
+using namespace std;
+
+struct SolarPanel {
+    int panel_id;
+    double efficiency;
+    double area;
+    double intensity;
+    string date_added;
+    SolarPanel* next;
+};
+
+void addSolarPanel(SolarPanel*& head) {
+    // Create a new solar panel
+    SolarPanel* newPanel = new SolarPanel;
+
+    // Get user input for solar panel details
+    cout << "Enter Panel ID: ";
+    cin >> newPanel->panel_id;
+    cout << "Enter Efficiency: ";
+    cin >> newPanel->efficiency;
+    cout << "Enter Area: ";
+    cin >> newPanel->area;
+    cout << "Enter Intensity: ";
+    cin >> newPanel->intensity;
+
+    // Get current date and time
+    time_t currentTime = time(nullptr);
+    newPanel->date_added = ctime(&currentTime);
+
+    // Set next pointer to the current head
+    newPanel->next = head;
+
+    // Update head to point to the new panel
+    head = newPanel;
+
+    cout << "Solar panel added successfully." << endl;
+}
+
+void displayID(SolarPanel* head) {
+    if (head == nullptr) {
+        cout << "No solar panels found." << endl;
+    }
+    else {
+        cout << "Solar Panels Sorted by ID: " << endl;
+        SolarPanel* current = head;
+        while (current != nullptr) {
+            cout << "Panel ID: " << current->panel_id << endl;
+            cout << "Efficiency: " << current->efficiency << endl;
+            cout << "Area: " << current->area << endl;
+            cout << "Intensity: " << current->intensity << endl;
+            cout << "Date Added: " << current->date_added << endl;
+
+            current = current->next;
+        }
+    }
+}
+
+void sortDataByID(SolarPanel*& head) {
+    SolarPanel* current = head;
+    SolarPanel* index = nullptr;
+
+    if (head == nullptr) {
+        return;
+    }
+    else {
+        while (current != nullptr) {
+            index = current->next;
+
+            while (index != nullptr) {
+                if (current->panel_id < index->panel_id) {
+                    swap(current->panel_id, index->panel_id);
+                    swap(current->efficiency, index->efficiency);
+                    swap(current->area, index->area);
+                    swap(current->intensity, index->intensity);
+                    swap(current->date_added, index->date_added);
+                }
+                index = index->next;
+            }
+            current = current->next;
+        }
+    }
+}
+
+void sortDataByEfficiency(SolarPanel*& head) {
+    SolarPanel* current = head;
+    SolarPanel* index = nullptr;
+
+    if (head == nullptr) {
+        return;
+    }
+    else {
+        while (current != nullptr) {
+            index = current->next;
+
+            while (index != nullptr) {
+                if (current->efficiency < index->efficiency) {
+                    swap(current->panel_id, index->panel_id);
+                    swap(current->efficiency, index->efficiency);
+                    swap(current->area, index->area);
+                    swap(current->intensity, index->intensity);
+                    swap(current->date_added, index->date_added);
+                }
+                index = index->next;
+            }
+            current = current->next;
+        }
+    }
+}
+
+void sortDataByArea(SolarPanel*& head) {
+    SolarPanel* current = head;
+    SolarPanel* index = nullptr;
+
+    if (head == nullptr) {
+        return;
+    }
+    else {
+        while (current != nullptr) {
+            index = current->next;
+
+            while (index != nullptr) {
+                if (current->area < index->area) {
+                    swap(current->panel_id, index->panel_id);
+                    swap(current->efficiency, index->efficiency);
+                    swap(current->area, index->area);
+                    swap(current->intensity, index->intensity);
+                    swap(current->date_added, index->date_added);
+                }
+                index = index->next;
+            }
+            current = current->next;
+        }
+    }
+}
+
+void sortDataByIntensity(SolarPanel*& head) {
+    SolarPanel* current = head;
+    SolarPanel* index = nullptr;
+
+    if (head == nullptr) {
+        return;
+    }
+    else {
+        while (current != nullptr) {
+            index = current->next;
+
+            while (index != nullptr) {
+                if (current->intensity < index->intensity) {
+                    swap(current->panel_id, index->panel_id);
+                    swap(current->efficiency, index->efficiency);
+                    swap(current->area, index->area);
+                    swap(current->intensity, index->intensity);
+                    swap(current->date_added, index->date_added);
+                }
+                index = index->next;
+            }
+            current = current->next;
+        }
+    }
+}
+
+void displayMenu() {
+    cout << "Solar Panel Management System" << endl;
+    cout << "1. Add a solar panel" << endl;
+    cout << "2. Sort solar panels by ID" << endl;
+    cout << "3. Sort solar panels by Efficiency" << endl;
+    cout << "4. Sort solar panels by Area" << endl;
+    cout << "5. Sort solar panels by Intensity" << endl;
+    cout << "6. Display solar panels sorted by ID" << endl;
+    cout << "7. Exit" << endl;
+    cout << "Enter your choice: ";
+}
+
+int main() {
+    SolarPanel* head = nullptr;
+    string choice;
+
+    do {
+        displayMenu();
+        cin >> choice;
+
+        if (choice == "1") {
+            addSolarPanel(head);
+        }
+        else if (choice == "2") {
+            sortDataByID(head);
+            cout << "Solar panels sorted by ID." << endl;
+        }
+        else if (choice == "3") {
+            sortDataByEfficiency(head);
+            cout << "Solar panels sorted by Efficiency." << endl;
+        }
+        else if (choice == "4") {
+            sortDataByArea(head);
+            cout << "Solar panels sorted by Area." << endl;
+        }
+        else if (choice == "5") {
+            sortDataByIntensity(head);
+            cout << "Solar panels sorted by Intensity." << endl;
+        }
+        else if (choice == "6") {
+            displayID(head);
+        }
+        else if (choice == "7") {
+            // Exit the program
+            cout << "Exiting the program..." << endl;
+        }
+        else {
+            cout << "Invalid choice. Please try again." << endl;
+        }
+
+        cout << endl;
+    } while (choice != "7");
+
+    // TODO: Clean up the dynamically allocated memory
+
+    return 0;
+}
